@@ -12,6 +12,9 @@ class APIUserSerializer(serializers.ModelSerializer):
 
     class Meta:
             model = APIUser
+            extra_kwargs = {
+                'user_pass': {'write_only': True}
+            }
             fields = (
                 'name',
                 'doc_id',
