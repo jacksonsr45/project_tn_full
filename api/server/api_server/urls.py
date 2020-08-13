@@ -13,3 +13,7 @@ from .views import (
 
 router = SimpleRouter()
 router.register('usuario', APIUserViewSet)
+router.register('dados-bancos', BAccountViewSet)
+router.register('movimentos-conta', BAccountMovimantViewSet)
+router.register('piedade', BWorkOfPietyViewSet)
+router.register('viagens', TravelViewSet)
