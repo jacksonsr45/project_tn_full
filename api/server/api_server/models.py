@@ -40,8 +40,8 @@ class BAccountMovimant(Base):
     user_id = models.ForeignKey(APIUser, related_name='baccountmovimant_apiuser_name', on_delete=models.CASCADE)
     account_id = models.ForeignKey(BAccount, related_name='baccountmovimant_baccount_account', on_delete=models.CASCADE)
     historic = models.CharField(max_length=255)
-    deb = models.DecimalField(max_digits= 2, decimal_places=2)
-    cred = models.DecimalField(max_digits= 2, decimal_places=2)
+    deb = models.DecimalField(max_digits= 100, decimal_places=2)
+    cred = models.DecimalField(max_digits= 100, decimal_places=2)
 
     class Meta:
         verbose_name = 'BAccountMovimant'
@@ -53,9 +53,9 @@ class BWorkOfPiety(Base):
     user_id = models.ForeignKey(APIUser, related_name='bworkofpiety_apiuser_name', on_delete=models.CASCADE)
     account_id = models.ForeignKey(BAccount, related_name='bworkofpiety_apiuser_name_baccount_account', on_delete=models.CASCADE)
     historic = models.CharField(max_length=255)
-    deb = models.DecimalField(max_digits= 2, decimal_places=2)
-    cred = models.DecimalField(max_digits= 2, decimal_places=2)
-    value_total = models.DecimalField(max_digits= 2,decimal_places=2)
+    deb = models.DecimalField(max_digits= 100, decimal_places=2)
+    cred = models.DecimalField(max_digits= 100, decimal_places=2)
+
 
 
     class Meta:
@@ -68,13 +68,13 @@ class BWorkOfPiety(Base):
 class Travel(Base):
     user_id = models.ForeignKey(APIUser, related_name='travel_apiuser_name', on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
-    collection = models.DecimalField(max_digits= 2,decimal_places=2)
-    delivered = models.DecimalField(max_digits= 2,decimal_places=2)
-    complementos = models.DecimalField(max_digits= 2,decimal_places=2)
-    deposits = models.DecimalField(max_digits= 2,decimal_places=2)
-    looting = models.DecimalField(max_digits= 2, decimal_places=2)
-    returned = models.DecimalField(max_digits= 2,decimal_places=2)
-    expenses = models.DecimalField(max_digits= 2,decimal_places=2)
+    collection = models.DecimalField(max_digits= 100,decimal_places=2)
+    delivered = models.DecimalField(max_digits= 100,decimal_places=2)
+    complementos = models.DecimalField(max_digits= 100,decimal_places=2)
+    deposits = models.DecimalField(max_digits= 100,decimal_places=2)
+    looting = models.DecimalField(max_digits= 100, decimal_places=2)
+    returned = models.DecimalField(max_digits= 100,decimal_places=2)
+    expenses = models.DecimalField(max_digits= 100,decimal_places=2)
 
     class Meta:
         verbose_name = 'Travel'

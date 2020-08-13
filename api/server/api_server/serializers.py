@@ -16,24 +16,31 @@ class APIUserSerializer(serializers.ModelSerializer):
                 'user_pass': {'write_only': True}
             }
             fields = (
+                'id',
                 'name',
                 'doc_id',
                 'row',
                 'email',
-                'user_pass'
+                'user_pass',
+                'criation',
+                'actualization',
+                'active'
             )
 
 
 class BAccountSerializer(serializers.ModelSerializer):
     
     class Meta:
-        model = APIUser
+        model = BAccount
         fields = (
+            'id',
             'title',
             'account',
             'description',
             'user_id',
-            'related_name'
+            'criation',
+            'actualization',
+            'active'
         )
 
 
@@ -42,15 +49,23 @@ class BAccountMovimantSerializer(serializers.ModelSerializer):
     class Meta:
         model = BAccountMovimant
         fields = (
+            'id',
             'user_id',
             'account_id',
             'historic',
             'deb',
-            'cred'
+            'cred',
+            'criation',
+            'actualization',
+            'active'
         )
 
 
 class BWorkOfPietySerializer(serializers.ModelSerializer):
+
+    value_total = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    
+    media_value_total = serializers.SerializerMethodField()
 
     class Meta:
         model = BWorkOfPiety
@@ -60,9 +75,22 @@ class BWorkOfPietySerializer(serializers.ModelSerializer):
             'historic',
             'deb',
             'cred',
-            'value_total'
+            'value_total',
+            'criation',
+            'actualization',
+            'active'
         )
 
+    def get_media_value_total(self, obj):
+        media_plus = obj.cred.aggregate(Avg('cred')).get('cred__avg')
+        
+        media_less = obj.deb.aggregate(Avg('deb')).get('deb__avg')
+
+        media = (media_plus - media_less)
+        
+        if media is None:
+            return 0
+        return media
 
 class TravelSerializer(serializers.ModelSerializer):
 
@@ -77,5 +105,8 @@ class TravelSerializer(serializers.ModelSerializer):
             'deposits',
             'looting',
             'returned',
-            'expenses'
+            'expenses',
+            'criation',
+            'actualization',
+            'active'
         )
