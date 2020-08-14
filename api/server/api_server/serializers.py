@@ -1,4 +1,6 @@
 from rest_framework import serializers
+from django.db.models import Sum
+
 
 from .models import (
     APIUser,
@@ -62,31 +64,30 @@ class BAccountMovimantSerializer(serializers.ModelSerializer):
 
 
 class BWorkOfPietySerializer(serializers.ModelSerializer):
-
-    value_total = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     
     media_value_total = serializers.SerializerMethodField()
 
     class Meta:
         model = BWorkOfPiety
         fields = (
+            'id',
             'user_id',
             'account_id',
             'historic',
             'deb',
             'cred',
-            'value_total',
+            'media_value_total',
             'criation',
             'actualization',
             'active'
         )
 
     def get_media_value_total(self, obj):
-        media_plus = obj.cred.aggregate(Avg('cred')).get('cred__avg')
+        media_plus = BWorkOfPiety.objects.aggregate(plus=Sum('cred'))['plus']
         
-        media_less = obj.deb.aggregate(Avg('deb')).get('deb__avg')
+        media_less = BWorkOfPiety.objects.aggregate(less=Sum('deb'))['less']
 
-        media = (media_plus - media_less)
+        media = media_plus - media_less
         
         if media is None:
             return 0
