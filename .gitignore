@@ -1,3 +1,4 @@
 api/env/
 api/server/db.sqlite3
 api/server/server/default.py
+mobile/tn_mobile/
