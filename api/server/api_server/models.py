@@ -1,8 +1,18 @@
 from django.db import models
+
+
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager
 )
+
+# =======================================================
+# Model Base
+# Base class from default in models
+# 
+# Exemple:
+# class nameclass(Base):  
+# #
 
 class Base(models.Model):
     criation = models.DateTimeField(auto_now_add=True)
@@ -12,13 +22,18 @@ class Base(models.Model):
     class Meta:
         abstract = True
 
-
+# =======================================================
+# Model User
+# Create User model 
+# #
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, is_staff=False, is_active=True, is_admin=False):
+
         if not email:
             raise ValueError("User must have an email address")
         if not password:
             raise ValueError("User must have a password")
+        
         user_obj = self.model(
             email = self.normalize_email(email)
         )
@@ -46,7 +61,7 @@ class UserManager(BaseUserManager):
         )
         return user
 
-
+ 
 class User(AbstractBaseUser): 
     email = models.EmailField(max_length=255, unique=TabError)
     # full_name = models.CharField(max_length=255, blank=True, null=True)
@@ -95,10 +110,15 @@ class User(AbstractBaseUser):
         return self.staff
 
 
+
 class Profile(models.Model):
     user = models.OneToOneField(User,  on_delete=models.CASCADE)
     # extend extra data
 
+#==========================================================
+# Model BAccount 
+#  
+# #
 
 class BAccount(Base):
     title = models.CharField(max_length=255)
@@ -111,6 +131,10 @@ class BAccount(Base):
         verbose_name_plural = 'BAccounts'
         ordering = ['id']
 
+#==========================================================
+# Model BAccountMoviment
+# 
+# #
 
 class BAccountMovimant(Base):
     user_id = models.ForeignKey(User, related_name='baccountmovimant_apiuser_name', on_delete=models.CASCADE)
@@ -124,6 +148,10 @@ class BAccountMovimant(Base):
         verbose_name_plural = 'BAccountMovimants'
         ordering = ['id']
 
+#==========================================================
+# Model BWorkOfPiey
+# 
+# #
 
 class BWorkOfPiety(Base):
     user_id = models.ForeignKey(User, related_name='bworkofpiety_apiuser_name', on_delete=models.CASCADE)
@@ -139,7 +167,10 @@ class BWorkOfPiety(Base):
         verbose_name_plural = 'BWorkOfPietys'
         ordering = ['id']
 
-
+#==========================================================
+# Model Travel
+# 
+# #
 
 class Travel(Base):
     user_id = models.ForeignKey(User, related_name='travel_apiuser_name', on_delete=models.CASCADE)

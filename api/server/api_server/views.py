@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 
 from .models import (
+    User,
     BAccount,
     BAccountMovimant,
     BWorkOfPiety,
@@ -8,11 +9,25 @@ from .models import (
 )
 
 from .serializers import (
+    UserSerializer,
     BAccountSerializer,
     BAccountMovimantSerializer,
     BWorkOfPietySerializer,
     TravelSerializer
 )
+
+#=========================================================
+#  View From user 
+# #
+class UserViewSet(viewsets.ModelViewSet):
+    
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+def token_request(request):
+    if user_requested_token() and token_request_is_warranted():
+        new_token = Token.objects.create(user=request.user)
 
 
 class BAccountViewSet(viewsets.ModelViewSet):
