@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
 
     'django_filters',
     'rest_framework',
@@ -44,6 +45,8 @@ INSTALLED_APPS = [
 
     'api_server',
 ]
+
+AUTH_USER_MODEL = 'api_server.User' # changes the built-in user models to ours
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

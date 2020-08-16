@@ -1,7 +1,6 @@
 from rest_framework import viewsets
 
 from .models import (
-    APIUser,
     BAccount,
     BAccountMovimant,
     BWorkOfPiety,
@@ -9,17 +8,11 @@ from .models import (
 )
 
 from .serializers import (
-    APIUserSerializer,
     BAccountSerializer,
     BAccountMovimantSerializer,
     BWorkOfPietySerializer,
     TravelSerializer
 )
-
-class APIUserViewSet(viewsets.ModelViewSet):
-    
-    queryset = APIUser.objects.all()
-    serializer_class = APIUserSerializer
 
 
 class BAccountViewSet(viewsets.ModelViewSet):

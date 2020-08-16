@@ -3,27 +3,12 @@ from django.db.models import Sum
 
 
 from .models import (
-    APIUser,
     BAccount,
     BAccountMovimant,
     BWorkOfPiety,
     Travel
 )
 
-class APIUserSerializer(serializers.ModelSerializer):
-
-    class Meta:
-            model = APIUser
-            extra_kwargs = {
-                'user_pass': {'write_only': True}
-            }
-            fields = (
-                'id',
-                'user',
-                'location',
-                'doc_id',
-                'birth_date'
-            )
 
 
 class BAccountSerializer(serializers.ModelSerializer):

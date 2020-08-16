@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import (
     AbstractBaseUser,
-    User, 
     BaseUserManager
 )
 
@@ -15,40 +14,40 @@ class Base(models.Model):
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, passoword=None, is_staff=False, is_active=True, is_admin=False):
+    def create_user(self, email, password=None, is_staff=False, is_active=True, is_admin=False):
         if not email:
             raise ValueError("User must have an email address")
-        if not passoword:
+        if not password:
             raise ValueError("User must have a password")
         user_obj = self.model(
             email = self.normalize_email(email)
         )
-        user_obj.set_password(passoword) # change user password
-        user_obj.is_staff = is_staff
-        user_obj.is_admin = is_admin
-        user_obj.is_active = is_active
+        user_obj.set_password(password) # change user password
+        user_obj.staff = is_staff
+        user_obj.admin = is_admin
+        user_obj.active = is_active
         user_obj.save(using=self._db)
         return user_obj
 
-    def create_staffuser():
+    def create_staffuser(self, email, password=None):
         user = self.create_user(
             email,
-            passoword=passoword,
+            password=password,
             is_staff=True
         )
         return user
 
-    def create_superuser():
+    def create_superuser(self, email, password=None):
         user = self.create_user(
             email,
-            passoword=passoword,
+            password=password,
             is_staff=True,
             is_admin=True
         )
         return user
 
 
-class CustomUser(AbstractBaseUser): 
+class User(AbstractBaseUser): 
     email = models.EmailField(max_length=255, unique=TabError)
     # full_name = models.CharField(max_length=255, blank=True, null=True)
     active = models.BooleanField(default=True) # can login
@@ -74,8 +73,8 @@ class CustomUser(AbstractBaseUser):
         return self.email
 
     @property
-    def is_staff(self):
-        return self.staff
+    def is_superuser(self):
+        return self.is_admin
 
     @property
     def is_admin(self):
@@ -85,26 +84,27 @@ class CustomUser(AbstractBaseUser):
     def is_active(self):
         return self.active
 
+    def has_perm(self, perm, obj=None):
+        return self.is_superuser
+
+    def has_module_perms(self, app_label):
+        return self.is_superuser
+
+    @property
+    def is_staff(self):
+        return self.staff
+
 
 class Profile(models.Model):
-    user = models.OneToOneField(User)
-    # Extend extra data
-
-class APIUser(
-            Base,
-            UserManager
-        ):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    location = models.CharField(max_length=30)
-    doc_id = models.CharField(max_length=30)
-    birth_date = models.DateField()
+    user = models.OneToOneField(User,  on_delete=models.CASCADE)
+    # extend extra data
 
 
 class BAccount(Base):
     title = models.CharField(max_length=255)
     account = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
-    user_id = models.ForeignKey(APIUser, related_name='baccount_apiuser_name', on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, related_name='baccount_apiuser_name', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'BAccount'
@@ -113,7 +113,7 @@ class BAccount(Base):
 
 
 class BAccountMovimant(Base):
-    user_id = models.ForeignKey(APIUser, related_name='baccountmovimant_apiuser_name', on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, related_name='baccountmovimant_apiuser_name', on_delete=models.CASCADE)
     account_id = models.ForeignKey(BAccount, related_name='baccountmovimant_baccount_account', on_delete=models.CASCADE)
     historic = models.CharField(max_length=255)
     deb = models.DecimalField(max_digits= 100, decimal_places=2)
@@ -126,7 +126,7 @@ class BAccountMovimant(Base):
 
 
 class BWorkOfPiety(Base):
-    user_id = models.ForeignKey(APIUser, related_name='bworkofpiety_apiuser_name', on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, related_name='bworkofpiety_apiuser_name', on_delete=models.CASCADE)
     account_id = models.ForeignKey(BAccount, related_name='bworkofpiety_apiuser_name_baccount_account', on_delete=models.CASCADE)
     historic = models.CharField(max_length=255)
     deb = models.DecimalField(max_digits= 100, decimal_places=2)
@@ -142,7 +142,7 @@ class BWorkOfPiety(Base):
 
 
 class Travel(Base):
-    user_id = models.ForeignKey(APIUser, related_name='travel_apiuser_name', on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, related_name='travel_apiuser_name', on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     collection = models.DecimalField(max_digits= 100,decimal_places=2)
     delivered = models.DecimalField(max_digits= 100,decimal_places=2)
