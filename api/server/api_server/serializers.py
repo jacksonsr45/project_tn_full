@@ -19,14 +19,10 @@ class APIUserSerializer(serializers.ModelSerializer):
             }
             fields = (
                 'id',
-                'name',
+                'user',
+                'location',
                 'doc_id',
-                'row',
-                'email',
-                'user_pass',
-                'criation',
-                'actualization',
-                'active'
+                'birth_date'
             )
 
 

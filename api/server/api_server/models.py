@@ -1,5 +1,9 @@
 from django.db import models
-
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    User, 
+    BaseUserManager
+)
 
 class Base(models.Model):
     criation = models.DateTimeField(auto_now_add=True)
@@ -10,18 +14,90 @@ class Base(models.Model):
         abstract = True
 
 
+class UserManager(BaseUserManager):
+    def create_user(self, email, passoword=None, is_staff=False, is_active=True, is_admin=False):
+        if not email:
+            raise ValueError("User must have an email address")
+        if not passoword:
+            raise ValueError("User must have a password")
+        user_obj = self.model(
+            email = self.normalize_email(email)
+        )
+        user_obj.set_password(passoword) # change user password
+        user_obj.is_staff = is_staff
+        user_obj.is_admin = is_admin
+        user_obj.is_active = is_active
+        user_obj.save(using=self._db)
+        return user_obj
 
-class APIUser(Base):
-    name = models.CharField(max_length=255)
-    doc_id = models.CharField(max_length=255, unique=True)
-    row = models.CharField(max_length=255)
-    email = models.EmailField()
-    user_pass = models.CharField(max_length=255)
+    def create_staffuser():
+        user = self.create_user(
+            email,
+            passoword=passoword,
+            is_staff=True
+        )
+        return user
 
-    class Meta:
-        verbose_name = 'APIUser'
-        verbose_name_plural = 'APIUsers'
-        ordering = ['id']
+    def create_superuser():
+        user = self.create_user(
+            email,
+            passoword=passoword,
+            is_staff=True,
+            is_admin=True
+        )
+        return user
+
+
+class CustomUser(AbstractBaseUser): 
+    email = models.EmailField(max_length=255, unique=TabError)
+    # full_name = models.CharField(max_length=255, blank=True, null=True)
+    active = models.BooleanField(default=True) # can login
+    staff = models.BooleanField(default=False) # staff user nom superuser
+    admin = models.BooleanField(default=False) # superuser
+    timestamp = models.DateTimeField(auto_now_add=True)
+    # confirm_email = models.BooleanField(default=False)
+    # admin = models.DateTimeField(default=False)
+
+    USERNAME_FIELD = 'email' #username
+    # email and passoword are required by default
+    REQUIRED_FIELDS = []
+
+    objects = UserManager()
+
+    def __str__(self):
+        return self.email
+
+    def get_full_name(self):
+        return self.email
+
+    def get_short_name(self):
+        return self.email
+
+    @property
+    def is_staff(self):
+        return self.staff
+
+    @property
+    def is_admin(self):
+        return self.admin
+
+    @property
+    def is_active(self):
+        return self.active
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User)
+    # Extend extra data
+
+class APIUser(
+            Base,
+            UserManager
+        ):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    location = models.CharField(max_length=30)
+    doc_id = models.CharField(max_length=30)
+    birth_date = models.DateField()
 
 
 class BAccount(Base):
