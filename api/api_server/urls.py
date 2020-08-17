@@ -7,4 +7,5 @@ from accounts.urls import accounts_router
 urlpatterns = [
     path('', include(accounts_router.urls)),
     path('admin/', admin.site.urls),
+    path('rest-auth/', include('rest_auth.urls')),
 ]
