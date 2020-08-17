@@ -8,7 +8,6 @@ from django.contrib.auth.models import (
     PermissionsMixin
 )
 
-from phone_field import PhoneField
 
 # =======================================================
 # Model User
