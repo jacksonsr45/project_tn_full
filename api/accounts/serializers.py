@@ -10,8 +10,10 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = (
             'id',
+            'url',
             'email',
-            'active',
-            'staff',
-            'admin'
+            'groups',
+            'is_active',
+            'is_staff',
+            'is_admin'
         )

@@ -1,8 +1,11 @@
 from django.db import models
 
+from django.utils import timezone
+
 from django.contrib.auth.models import (
     AbstractBaseUser,
-    BaseUserManager
+    BaseUserManager,
+    PermissionsMixin
 )
 
 # =======================================================
@@ -45,12 +48,14 @@ class UserManager(BaseUserManager):
         return user
 
  
-class User(AbstractBaseUser): 
+class User(AbstractBaseUser, PermissionsMixin):
+    username = None 
     email = models.EmailField(max_length=255, unique=TabError)
-    # full_name = models.CharField(max_length=255, blank=True, null=True)
+    full_name = models.CharField(max_length=255, blank=True, null=True)
     active = models.BooleanField(default=True) # can login
     staff = models.BooleanField(default=False) # staff user nom superuser
     admin = models.BooleanField(default=False) # superuser
+    date_joined = models.DateTimeField(default=timezone.now)
     timestamp = models.DateTimeField(auto_now_add=True)
     # confirm_email = models.BooleanField(default=False)
     # admin = models.DateTimeField(default=False)
@@ -72,7 +77,7 @@ class User(AbstractBaseUser):
 
     @property
     def is_superuser(self):
-        return self.is_admin
+        return self.admin
 
     @property
     def is_admin(self):
