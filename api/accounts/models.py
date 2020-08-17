@@ -8,6 +8,8 @@ from django.contrib.auth.models import (
     PermissionsMixin
 )
 
+from phone_field import PhoneField
+
 # =======================================================
 # Model User
 # Create User model 
@@ -52,6 +54,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = None 
     email = models.EmailField(max_length=255, unique=TabError)
     full_name = models.CharField(max_length=255, blank=True, null=True)
+    document_id = models.CharField(max_length=255, blank=True, null=True)
+    year_of_birth = models.DateField(max_length=255, blank=True, null=True)
+    phone_number = models.CharField(max_length=255, blank=True, null=True)
     active = models.BooleanField(default=True) # can login
     staff = models.BooleanField(default=False) # staff user nom superuser
     admin = models.BooleanField(default=False) # superuser
