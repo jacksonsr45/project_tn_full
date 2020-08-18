@@ -6,7 +6,7 @@ from accounts.urls import accounts_router
 
 
 urlpatterns = [
-    path('', include(accounts_router.urls)),
+    path(r'api/v1/', include(accounts_router.urls)),
     path('admin/', admin.site.urls),
-    path('rest-auth/', include('rest_auth.urls')),
+    path('api/v1/', include('rest_auth.urls')),
 ]
