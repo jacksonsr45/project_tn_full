@@ -27,5 +27,5 @@
 
     url_base = 'http://url/api/v2/logout/'
     
-    result_cources = requests.post(url=url_base_cources, headers=headers)
+    result = requests.post(url=url_base, headers=headers)
   ```
