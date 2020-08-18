@@ -4,7 +4,7 @@
   - Route Default from login
   ```json
     {
-        "username": "username", // <- This field can be null!
+        "username": "username", /* <- This field can be null! */
         "email": "email@email.com",
         "password": "pass"
     }
