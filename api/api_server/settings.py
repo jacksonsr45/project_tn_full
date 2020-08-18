@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'rest_auth',
 
     'accounts',
+    'entities',
     'bank_account',
     'piety_works',
     'travel',
