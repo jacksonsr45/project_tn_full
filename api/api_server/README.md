@@ -28,4 +28,6 @@
     url_base = 'http://url/api/v2/logout/'
     
     result = requests.post(url=url_base, headers=headers)
+
+    assert result.status_code == 200
   ```
