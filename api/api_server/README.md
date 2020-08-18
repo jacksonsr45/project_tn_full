@@ -17,3 +17,15 @@
   ```
 - http://url/api/v1/logout/
   - Route Default from logout
+  
+  Exemple:
+  ```py
+    import requests
+
+    headers = {'Authorization': 'Token value_token'}
+
+
+    url_base = 'http://url/api/v2/logout/'
+    
+    result_cources = requests.post(url=url_base_cources, headers=headers)
+  ```
