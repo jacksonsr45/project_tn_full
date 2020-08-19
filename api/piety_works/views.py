@@ -1,3 +1,10 @@
-from django.shortcuts import render
+from rest_framework import viewsets
 
-# Create your views here.
+
+from .serializers import PietWorkSerializer
+from .models import PietWork
+
+class PietWorkViewSet(viewsets.ModelViewSet):
+    
+    queryset = PietWork.objects.all()
+    serializer_class = PietWorkSerializer
