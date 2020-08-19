@@ -8,7 +8,7 @@ from entities.models import Entities
 class UserSerializer(serializers.ModelSerializer ):
 
     # HyperLinked Related Field entity by user 
-    entitie_id = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='entities-detail')
+    user_entitie_id = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='entities-detail')
 
     class Meta:
         model = User
@@ -20,7 +20,7 @@ class UserSerializer(serializers.ModelSerializer ):
             'document_id',
             'year_of_birth',
             'phone_number',
-            'entitie_id',
+            'user_entitie_id',
             'groups'
         )
 

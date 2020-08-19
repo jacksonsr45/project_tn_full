@@ -18,6 +18,8 @@ class EntitySerializer(serializers.ModelSerializer ):
     # travel_id this is id from travel relation  in db
     travel_id = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='travel-detail')
 
+
+
     class Meta:
         model = Entities
         fields = (

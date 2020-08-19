@@ -6,7 +6,7 @@ from .models import BankAccount, BankAccountMovimant
 
 class BankAccountSerializer(serializers.ModelSerializer ):
 
-    account_id = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='bankaccountmovimant-detail')
+    bank_account_moviment = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='bankaccountmovimant-detail')
 
     class Meta:
         model = BankAccount
@@ -14,7 +14,7 @@ class BankAccountSerializer(serializers.ModelSerializer ):
             'title',
             'account',
             'description',
-            'account_id',
+            'bank_account_moviment',
             'criation',
             'actualization',
             'active'
