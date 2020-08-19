@@ -7,6 +7,7 @@ class TravelSerializer(serializers.ModelSerializer ):
     class Meta:
         model = Travel
         fields = (
+            
             'title',
             'collection',
             'delivered',
@@ -14,5 +15,6 @@ class TravelSerializer(serializers.ModelSerializer ):
             'deposits',
             'looting',
             'returned',
-            'expenses'
+            'expenses',
+            'total'
         )
