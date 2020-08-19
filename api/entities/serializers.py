@@ -13,9 +13,9 @@ class EntitySerializer(serializers.ModelSerializer ):
     # HyperLinked Related Field entity by user 
     # bka_entity_id this is id from bank-account relation  in db
     bka_entity_id = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='bankaccount-detail')
-
+    # piet_work_entity_id this is id from piet work relation  in db
     piet_work_entity_id = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='pietwork-detail')
-
+    # travel_id this is id from travel relation  in db
     travel_id = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='travel-detail')
 
     class Meta:
