@@ -1,8 +1,10 @@
 from django.db import models
 
+from base_models.models import Base
+
 from accounts.models import User
 
-class Entities(models.Model):
+class Entities(Base):
     
     name = models.CharField(max_length=255)
     type_entity = models.CharField(max_length=255)

@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     'accounts',
     'entities',
+    'base_models',
     'bank_account',
     'piety_works',
     'travel',
