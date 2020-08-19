@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class BaseModelsConfig(AppConfig):
+class TravelConfig(AppConfig):
     name = 'base_models'

@@ -19,3 +19,17 @@ class BankAccount(Base):
 
     def __str__(self):
         return self.title
+
+
+
+class BankAccountMovimant(Base):
+    user_id = models.ForeignKey(User, related_name='bka_user_id', on_delete=models.CASCADE)
+    account_id = models.ForeignKey(BankAccount, related_name='bank_account', on_delete=models.CASCADE)
+    historic = models.CharField(max_length=255)
+    deb = models.DecimalField(max_digits= 100, decimal_places=2)
+    cred = models.DecimalField(max_digits= 100, decimal_places=2)
+
+    class Meta:
+        verbose_name = 'BankAccountMovimant'
+        verbose_name_plural = 'BankAccountMovimants'
+        ordering = ['id']
