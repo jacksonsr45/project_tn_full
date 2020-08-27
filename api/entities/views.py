@@ -21,6 +21,10 @@ class EntityViewSet(viewsets.ModelViewSet):
     queryset = Entities.objects.all()
     serializer_class = EntitySerializer
 
+    def get_queryset(self):
+        if self.kwargs.get('entity_pk'):
+            return self.queryset.filter(entity_id=self.kwargs.get('entity_pk'))
+        return self.queryset.all()
 
 
     @action(detail=True, methods=['GET'])
@@ -53,7 +57,7 @@ class EntityViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['GET'])
     def viagens(self, request, pk=None):
-        travel = Travel.objects.filter(entity_travel_id=pk)
+        travel = Travel.objects.filter(entity_id=pk)
         page = self.paginate_queryset(travel)
 
         if page is not None:

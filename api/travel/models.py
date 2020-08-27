@@ -1,3 +1,4 @@
+  
 from django.db import models
 
 from base_models.models import Base
@@ -15,7 +16,6 @@ class Travel(Base):
     looting = models.DecimalField(max_digits= 100, decimal_places=2)
     returned = models.DecimalField(max_digits= 100,decimal_places=2)
     expenses = models.DecimalField(max_digits= 100,decimal_places=2)
-    total = models.DecimalField(max_digits= 100,decimal_places=2)
 
     class Meta:
         verbose_name = 'Travel'

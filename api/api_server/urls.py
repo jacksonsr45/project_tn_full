@@ -14,7 +14,7 @@ urlpatterns = [
     path(r'api/v1/', include(entity_router.urls)),
     path(r'api/v1/', include(bank_router.urls)),
     path(r'api/v1/', include(piet_router.urls)),
-    path(r'api/v1/', include(travel_router.urls)),
+    path(r'api/v1/entidade/<int:entity_pk>/', include(travel_router.urls)),
     path('admin/', admin.site.urls),
     path('api/v1/', include('rest_auth.urls')),
 ]
