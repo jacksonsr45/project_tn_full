@@ -1,0 +1,60 @@
+/* GLOBAL */
+:root {
+    /*base color background*/
+    --color-background: #C4BCF8;
+    --color-background-secondary: #B4B4B6;
+    --color-background-header: #7155D9;
+    --color-background-footer: #7155D9;
+    --color-background-button: #5944A6;
+    --color-secondary-background-button: #040FD9;
+    /*base colors icon*/
+    --color-icons: #5944A6;
+    /*base color text and fields*/
+    --color-text-base: #C4BCF8;
+    --color-text-hover: #9492a5;
+    --color-input-background: #F2F2F2;
+    --color-text-input: rgba(0, 0, 0, 0.5);
+    --color-text-alert: #F2101E;
+    --color-button-text: #F2F2F2;
+    /*colors secondary default*/
+    --color-yellow: #F2E74B;
+    --color-blue-secondary: #020873;
+  
+    /*base color text buttons*/
+    --color-text-button: #C4BCF8;
+    --color-text-button-hover: #9492a5;
+  
+    --color-default-transparent: transparent;
+}
+html { 
+    font-size: 60%;
+} 
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html, body {
+    width: 100vw;
+    height: 100vh;
+}
+a {
+    text-decoration: none;
+    color: var(--color-button-text);
+}
+body{
+    background-color: var(--color-background);
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+body, input, button, textarea{
+    font: 500 1.6rem Poppins;
+    color: var(--color-text-base);
+}
+
+@media (min-width: 700px){
+    html {
+        font-size: 62.5%;
+    }
+}
