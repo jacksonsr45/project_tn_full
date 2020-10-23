@@ -4,9 +4,19 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class UserController extends Controller
 {
+    /**
+	 * @var user
+	 */
+	private $user;
+
+	public function __construct(User $user)
+    {
+	    $this->user = $user;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +24,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $user = $this->user->paginate('10');
+
+        return response()->json([
+            'data' => $user
+        ], 200);
     }
 
     /**
@@ -25,7 +39,19 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        try {
+            $data['password'] = bcrypt($data['password']);
+            $user = $this->user->create($data);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Usuário não cadastrado!'
+            ], 400);
+        }
+
+        return response()->json([
+            'msg' => 'Usuário cadastrado com sucesso!'
+        ], 200);
     }
 
     /**
@@ -36,7 +62,17 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $user = $this->user->findOrFail($id);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Usuário não encontrado!'
+            ], 404);
+        }
+
+        return response()->json([
+            'data' => $user
+        ], 200);
     }
 
     /**
@@ -48,7 +84,18 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $data = $request->all();
+            $user = $this->user->findOrFail($id);
+            $user->update($data);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Usuário não atualizado!'
+            ], 406);
+        }
+        return response()->json([
+            'data' => $user
+        ], 200);
     }
 
     /**
@@ -59,6 +106,18 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $user = $this->user->findOrFail($id);
+            $user->delete($id);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Usuário não removido!'
+            ], 401);
+        }
+        return response()->json([
+            'data' => [
+                'msg' => 'Usuário removido com sucesso!'
+            ]
+        ], 200);
     }
 }
