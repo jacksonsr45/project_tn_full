@@ -1,4 +1,0 @@
-.env
-.venv
-api/db.sqlite3
-api/web/templates/node_modules/

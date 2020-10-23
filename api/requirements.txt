@@ -1,9 +1,0 @@
-Django==2.2.15
-django-filter==2.3.0
-django-phone-field==1.8.1
-django-rest-auth==0.9.5
-djangorestframework==3.11.1
-Markdown==3.2.2
-pytz==2020.1
-six==1.15.0
-sqlparse==0.3.1
