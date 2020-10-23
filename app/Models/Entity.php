@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Entity extends Model
 {
     use HasFactory;
+
+    public function user()
+    {
+        return $this->hasMany(User::class);
+    }
+
+    public function entity()
+    {
+        return $this->hasOne(Thumbnail::class);
+    }
 }

@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Thumbnail extends Model
 {
     use HasFactory;
+
+    public function entity()
+    {
+        return $this->belongsTo(Entity::class);
+    }
 }
