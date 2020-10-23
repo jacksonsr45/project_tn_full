@@ -23,4 +23,8 @@ Route::prefix('v1')->namespace('App\Http\Controllers\Api')->group(function(){
     Route::name('users.')->group(function() {
         Route::resource('users', 'UserController');
     });
+
+    Route::name('entities.')->group(function() {
+        Route::resource('entities', 'EntityController');
+    });
 });
