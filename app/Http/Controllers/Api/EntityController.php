@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Entity;
 Use App\Services\ApiErrMessages;
 Use App\Services\ApiSuccessMessages;
+Use App\Services\Crud\EntityCrud;
 
 class EntityController extends Controller
 {
@@ -26,9 +27,9 @@ class EntityController extends Controller
      */
     public function index()
     {
-        $entities = $this->entity->all();
-
-        $message = new ApiSuccessMessages('index', $entities);
+        $data = new EntityCrud($this->entity);
+        $message = new ApiSuccessMessages('index',
+                                $data->read());
         return response()->json($message
                         ->getMessage(), 200);
     }
@@ -41,12 +42,10 @@ class EntityController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
-        $data['user_id'] = $request->user_id;
         try {
-            $entity = $this->entity->create($data);
-
-            $message = new ApiSuccessMessages('store', $entity);
+            $data = new EntityCrud($this->entity);
+            $message = new ApiSuccessMessages('store',
+                                $data->create($request));
             return response()->json($message
                             ->getMessage(), 200);
         } catch (\Exception $e) {
@@ -64,11 +63,11 @@ class EntityController extends Controller
     public function show($id)
     {
         try {
-            $entity = $this->entity->findOrFail($id);
-
-            $message = new ApiSuccessMessages('show', $entity);
+            $data = new EntityCrud($this->entity);
+            $message = new ApiSuccessMessages('show',
+                                    $data->show($id));
             return response()->json($message
-                            ->getMessage(), 200);
+                                ->getMessage(), 200);
         } catch (\Exception $e) {
             $message = new ApiErrMessages($e->getMessage());
             return response()->json($message->getMessage(), 401);
@@ -85,11 +84,9 @@ class EntityController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $data = $request->all();
-            $entity = $this->entity->findOrFail($id);
-            $entity->update($data);
-
-            $message = new ApiSuccessMessages('update', $entity);
+            $data = new EntityCrud($this->entity);
+            $message = new ApiSuccessMessages('update',
+                                    $data->update($request, $id));
             return response()->json($message
                             ->getMessage(), 200);
         } catch (\Exception $e) {
@@ -107,10 +104,9 @@ class EntityController extends Controller
     public function destroy($id)
     {
         try {
-            $entity = $this->entity->findOrFail($id);
-            $entity->delete($id);
-
-            $message = new ApiSuccessMessages('destroy', $entity);
+            $data = new EntityCrud($this->entity);
+            $message = new ApiSuccessMessages('destroy',
+                                    $data->delete($id));
             return response()->json($message
                             ->getMessage(), 200);
         } catch (\Exception $e) {

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 Use App\Services\ApiErrMessages;
 Use App\Services\ApiSuccessMessages;
+Use App\Services\Crud\UserCrud;
 
 class UserController extends Controller
 {
@@ -26,9 +27,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = $this->user->all();
-
-        $message = new ApiSuccessMessages('index', $users);
+        $data = new UserCrud($this->user);
+        $message = new ApiSuccessMessages('index',
+                                    $data->read());
         return response()->json($message
                         ->getMessage(), 200);
     }
@@ -41,12 +42,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
         try {
-            $data['password'] = bcrypt($data['password']);
-            $user = $this->user->create($data);
-
-            $message = new ApiSuccessMessages('store', $user);
+            $data = new UserCrud($this->user);
+            $message = new ApiSuccessMessages('store',
+                                    $data->create($request));
             return response()->json($message
                         ->getMessage(), 200);
         } catch (\Exception $e) {
@@ -65,9 +64,9 @@ class UserController extends Controller
     public function show($id)
     {
         try {
-            $user = $this->user->findOrFail($id);
-
-            $message = new ApiSuccessMessages('show', $user);
+            $data = new UserCrud($this->user);
+            $message = new ApiSuccessMessages('show',
+                                        $data->show($id));
             return response()->json($message
                         ->getMessage(), 200);
         } catch (\Exception $e) {
@@ -87,11 +86,9 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $data = $request->all();
-            $user = $this->user->findOrFail($id);
-            $user->update($data);
-
-            $message = new ApiSuccessMessages('update', $user);
+            $data = new UserCrud($this->user);
+            $message = new ApiSuccessMessages('update',
+                                    $data->update($request, $id));
             return response()->json($message
                         ->getMessage(), 200);
         } catch (\Exception $e) {
@@ -109,10 +106,9 @@ class UserController extends Controller
     public function destroy($id)
     {
         try {
-            $user = $this->user->findOrFail($id);
-            $user->delete($id);
-
-            $message = new ApiSuccessMessages('destroy', $user);
+            $data = new UserCrud($this->user);
+            $message = new ApiSuccessMessages('destroy',
+                                    $data->delete($id));
             return response()->json($message
                         ->getMessage(), 200);
         } catch (\Exception $e) {
