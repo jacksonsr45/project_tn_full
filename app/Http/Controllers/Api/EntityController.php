@@ -13,11 +13,11 @@ class EntityController extends Controller
     /**
 	 * @var entity
 	 */
-	private $entity;
+    private $entity;
 
 	public function __construct(Entity $entity)
     {
-	    $this->entity = $entity;
+        $this->entity = $entity;
     }
     /**
      * Display a listing of the resource.
@@ -28,8 +28,7 @@ class EntityController extends Controller
     {
         $entities = $this->entity->all();
 
-        $msg = 'Listando todas as Entidades!';
-        $message = new ApiSuccessMessages($msg, $entities);
+        $message = new ApiSuccessMessages('index', $entities);
         return response()->json($message
                         ->getMessage(), 200);
     }
@@ -47,8 +46,7 @@ class EntityController extends Controller
         try {
             $entity = $this->entity->create($data);
 
-            $msg = 'Entidade cadastrada com sucesso!';
-            $message = new ApiSuccessMessages($msg, $entity);
+            $message = new ApiSuccessMessages('store', $entity);
             return response()->json($message
                             ->getMessage(), 200);
         } catch (\Exception $e) {
@@ -68,8 +66,7 @@ class EntityController extends Controller
         try {
             $entity = $this->entity->findOrFail($id);
 
-            $msg = 'Listando Entidade!';
-            $message = new ApiSuccessMessages($msg, $entity);
+            $message = new ApiSuccessMessages('show', $entity);
             return response()->json($message
                             ->getMessage(), 200);
         } catch (\Exception $e) {
@@ -92,8 +89,7 @@ class EntityController extends Controller
             $entity = $this->entity->findOrFail($id);
             $entity->update($data);
 
-            $msg = 'Entidade atualizada com sucesso!';
-            $message = new ApiSuccessMessages($msg, $entity);
+            $message = new ApiSuccessMessages('update', $entity);
             return response()->json($message
                             ->getMessage(), 200);
         } catch (\Exception $e) {
@@ -114,8 +110,7 @@ class EntityController extends Controller
             $entity = $this->entity->findOrFail($id);
             $entity->delete($id);
 
-            $msg = 'Entidade removida com sucesso!';
-            $message = new ApiSuccessMessages($msg, $entity);
+            $message = new ApiSuccessMessages('destroy', $entity);
             return response()->json($message
                             ->getMessage(), 200);
         } catch (\Exception $e) {

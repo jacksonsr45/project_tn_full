@@ -28,8 +28,7 @@ class UserController extends Controller
     {
         $users = $this->user->all();
 
-        $msg = 'Listando todos Usuários!';
-        $message = new ApiSuccessMessages($msg, $users);
+        $message = new ApiSuccessMessages('index', $users);
         return response()->json($message
                         ->getMessage(), 200);
     }
@@ -47,8 +46,7 @@ class UserController extends Controller
             $data['password'] = bcrypt($data['password']);
             $user = $this->user->create($data);
 
-            $msg = 'Usuário cadastrado com sucesso!';
-            $message = new ApiSuccessMessages($msg, $user);
+            $message = new ApiSuccessMessages('store', $user);
             return response()->json($message
                         ->getMessage(), 200);
         } catch (\Exception $e) {
@@ -69,8 +67,7 @@ class UserController extends Controller
         try {
             $user = $this->user->findOrFail($id);
 
-            $msg = 'Listando Usuário!';
-            $message = new ApiSuccessMessages($msg, $user);
+            $message = new ApiSuccessMessages('show', $user);
             return response()->json($message
                         ->getMessage(), 200);
         } catch (\Exception $e) {
@@ -94,8 +91,7 @@ class UserController extends Controller
             $user = $this->user->findOrFail($id);
             $user->update($data);
 
-            $msg = 'Usuário atualizado com sucesso!';
-            $message = new ApiSuccessMessages($msg, $user);
+            $message = new ApiSuccessMessages('update', $user);
             return response()->json($message
                         ->getMessage(), 200);
         } catch (\Exception $e) {
@@ -116,8 +112,7 @@ class UserController extends Controller
             $user = $this->user->findOrFail($id);
             $user->delete($id);
 
-            $msg = 'Usuário removido com sucesso!';
-            $message = new ApiSuccessMessages($msg, $user);
+            $message = new ApiSuccessMessages('destroy', $user);
             return response()->json($message
                         ->getMessage(), 200);
         } catch (\Exception $e) {

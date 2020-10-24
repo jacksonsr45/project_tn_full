@@ -9,9 +9,17 @@ class ApiSuccessMessages
     */
     private $message = [];
 
-    public function __construct( $msg, $data)
+    protected $messages = [
+        'index'         => 'Listando todo o conteúdo!',
+        'store'         => 'Novo cadastro realizado com sucesso!',
+        'show'          => 'Listando conteúdo!',
+        'update'        => 'Atualizado com sucesso!',
+        'destroy'       => 'Removido com sucesso!'
+    ];
+
+    public function __construct( $type, $data)
     {
-        $this->message['message'] = $msg;
+        $this->message['message'] = $this->messages[$type];
         $this->message['data'] = $data;
     }
 
