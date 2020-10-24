@@ -9,6 +9,13 @@ class Entity extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'name',
+        'type',
+        'description'
+    ];
+
     public function user()
     {
         return $this->hasMany(User::class);

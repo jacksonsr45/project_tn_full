@@ -24,7 +24,7 @@ class EntityController extends Controller
      */
     public function index()
     {
-        $entities = $this->entity->paginate('10');
+        $entities = $this->entity->all();
 
         return response()->json([
             'data' => $entities
@@ -40,11 +40,12 @@ class EntityController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        $data['user_id'] = $request->user_id;
         try {
             $entity = $this->entity->create($data);
         } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Entidade não cadastrada!'
+                'error' => $e->getMessage()
             ], 400);
         }
 

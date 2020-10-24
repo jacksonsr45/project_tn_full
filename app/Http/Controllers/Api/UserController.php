@@ -24,7 +24,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = $this->user->paginate('10');
+        $users = $this->user->all();
 
         return response()->json([
             'data' => $users
