@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Entity;
+Use App\Services\ApiErrMessages;
+Use App\Services\ApiSuccessMessages;
 
 class EntityController extends Controller
 {
@@ -26,9 +28,10 @@ class EntityController extends Controller
     {
         $entities = $this->entity->all();
 
-        return response()->json([
-            'data' => $entities
-        ], 200);
+        $msg = 'Listando todas as Entidades!';
+        $message = new ApiSuccessMessages($msg, $entities);
+        return response()->json($message
+                        ->getMessage(), 200);
     }
 
     /**
@@ -43,15 +46,15 @@ class EntityController extends Controller
         $data['user_id'] = $request->user_id;
         try {
             $entity = $this->entity->create($data);
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => $e->getMessage()
-            ], 400);
-        }
 
-        return response()->json([
-            'msg' => 'Entidade cadastrada com sucesso!'
-        ], 200);
+            $msg = 'Entidade cadastrada com sucesso!';
+            $message = new ApiSuccessMessages($msg, $entity);
+            return response()->json($message
+                            ->getMessage(), 200);
+        } catch (\Exception $e) {
+            $message = new ApiErrMessages($e->getMessage());
+            return response()->json($message->getMessage(), 401);
+        }
     }
 
     /**
@@ -64,15 +67,15 @@ class EntityController extends Controller
     {
         try {
             $entity = $this->entity->findOrFail($id);
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Entidade não encontrada!'
-            ], 404);
-        }
 
-        return response()->json([
-            'data' => $entity
-        ], 200);
+            $msg = 'Listando Entidade!';
+            $message = new ApiSuccessMessages($msg, $entity);
+            return response()->json($message
+                            ->getMessage(), 200);
+        } catch (\Exception $e) {
+            $message = new ApiErrMessages($e->getMessage());
+            return response()->json($message->getMessage(), 401);
+        }
     }
 
     /**
@@ -88,14 +91,15 @@ class EntityController extends Controller
             $data = $request->all();
             $entity = $this->entity->findOrFail($id);
             $entity->update($data);
+
+            $msg = 'Entidade atualizada com sucesso!';
+            $message = new ApiSuccessMessages($msg, $entity);
+            return response()->json($message
+                            ->getMessage(), 200);
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Entidade não atualizada!'
-            ], 406);
+            $message = new ApiErrMessages($e->getMessage());
+            return response()->json($message->getMessage(), 401);
         }
-        return response()->json([
-            'data' => $entity
-        ], 200);
     }
 
     /**
@@ -109,15 +113,14 @@ class EntityController extends Controller
         try {
             $entity = $this->entity->findOrFail($id);
             $entity->delete($id);
+
+            $msg = 'Entidade removida com sucesso!';
+            $message = new ApiSuccessMessages($msg, $entity);
+            return response()->json($message
+                            ->getMessage(), 200);
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Entidade não removida!'
-            ], 401);
+            $message = new ApiErrMessages($e->getMessage());
+            return response()->json($message->getMessage(), 401);
         }
-        return response()->json([
-            'data' => [
-                'msg' => 'Entidade removida com sucesso!'
-            ]
-        ], 200);
     }
 }

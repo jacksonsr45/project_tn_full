@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+Use App\Services\ApiErrMessages;
+Use App\Services\ApiSuccessMessages;
 
 class UserController extends Controller
 {
@@ -26,9 +28,10 @@ class UserController extends Controller
     {
         $users = $this->user->all();
 
-        return response()->json([
-            'data' => $users
-        ], 200);
+        $msg = 'Listando todos Usuários!';
+        $message = new ApiSuccessMessages($msg, $users);
+        return response()->json($message
+                        ->getMessage(), 200);
     }
 
     /**
@@ -43,15 +46,16 @@ class UserController extends Controller
         try {
             $data['password'] = bcrypt($data['password']);
             $user = $this->user->create($data);
+
+            $msg = 'Usuário cadastrado com sucesso!';
+            $message = new ApiSuccessMessages($msg, $user);
+            return response()->json($message
+                        ->getMessage(), 200);
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Usuário não cadastrado!'
-            ], 400);
+            $message = new ApiErrMessages($e->getMessage());
+            return response()->json($message->getMessage(), 401);
         }
 
-        return response()->json([
-            'msg' => 'Usuário cadastrado com sucesso!'
-        ], 200);
     }
 
     /**
@@ -64,15 +68,16 @@ class UserController extends Controller
     {
         try {
             $user = $this->user->findOrFail($id);
+
+            $msg = 'Listando Usuário!';
+            $message = new ApiSuccessMessages($msg, $user);
+            return response()->json($message
+                        ->getMessage(), 200);
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Usuário não encontrado!'
-            ], 404);
+            $message = new ApiErrMessages($e->getMessage());
+            return response()->json($message->getMessage(), 401);
         }
 
-        return response()->json([
-            'data' => $user
-        ], 200);
     }
 
     /**
@@ -88,14 +93,15 @@ class UserController extends Controller
             $data = $request->all();
             $user = $this->user->findOrFail($id);
             $user->update($data);
+
+            $msg = 'Usuário atualizado com sucesso!';
+            $message = new ApiSuccessMessages($msg, $user);
+            return response()->json($message
+                        ->getMessage(), 200);
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Usuário não atualizado!'
-            ], 406);
+            $message = new ApiErrMessages($e->getMessage());
+            return response()->json($message->getMessage(), 401);
         }
-        return response()->json([
-            'data' => $user
-        ], 200);
     }
 
     /**
@@ -109,15 +115,14 @@ class UserController extends Controller
         try {
             $user = $this->user->findOrFail($id);
             $user->delete($id);
+
+            $msg = 'Usuário removido com sucesso!';
+            $message = new ApiSuccessMessages($msg, $user);
+            return response()->json($message
+                        ->getMessage(), 200);
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Usuário não removido!'
-            ], 401);
+            $message = new ApiErrMessages($e->getMessage());
+            return response()->json($message->getMessage(), 401);
         }
-        return response()->json([
-            'data' => [
-                'msg' => 'Usuário removido com sucesso!'
-            ]
-        ], 200);
     }
 }
