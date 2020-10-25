@@ -16,6 +16,7 @@ class CreateEntityAddressesTable extends Migration
         Schema::create('entity_addresses', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('entity_id');
+            $table->unsignedBigInteger('country_id');
             $table->unsignedBigInteger('state_id');
             $table->unsignedBigInteger('city_id');
             $table->string('address');
@@ -25,6 +26,9 @@ class CreateEntityAddressesTable extends Migration
             $table->integer('zip_code');
             $table->timestamps();
             $table->foreign('entity_id')->references('id')->on('entities')
+                                                        ->onDelete('cascade')
+                                                        ->onUpdate('cascade');
+            $table->foreign('country_id')->references('id')->on('countries')
                                                         ->onDelete('cascade')
                                                         ->onUpdate('cascade');
             $table->foreign('state_id')->references('id')->on('states')
