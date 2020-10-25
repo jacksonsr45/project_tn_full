@@ -4,6 +4,11 @@ use Illuminate\Support\Facades\Validator;
 
 class UserCrud extends AbstractCrud
 {
+    public function read()
+    {
+        return $this->model->all();
+    }
+
     public function create($request)
     {
         $data = $request->all();
@@ -39,6 +44,8 @@ class UserCrud extends AbstractCrud
                 'zip_code'          => $data['zip_code']
             ]
         );
+
+        return $this->model->with('profile')->with('address');
     }
 
     public function update($request, $id)
@@ -77,6 +84,6 @@ class UserCrud extends AbstractCrud
                 'zip_code'          => $data['zip_code']
             ]
         );
-        return $this->model;
+        return $this->model->with('profile')->with('address');
     }
 }

@@ -17,7 +17,6 @@ class CreateStatesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('country_id');
             $table->string('name');
-            $table->string('slug');
             $table->string('initials');
             $table->timestamps();
             $table->foreign('country_id')->references('id')->on('countries')

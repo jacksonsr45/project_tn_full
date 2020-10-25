@@ -17,7 +17,7 @@ class CreateCitiesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('state_id');
             $table->string('name');
-            $table->string('slug');
+            $table->string('ibge_code')->nullable();
             $table->timestamps();
             $table->foreign('state_id')->references('id')->on('states')
                                                         ->onDelete('cascade')
