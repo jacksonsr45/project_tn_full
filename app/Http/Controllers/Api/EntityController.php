@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\EntityRequest;
 use App\Models\Entity;
 Use App\Services\Crud\EntityCrud;
 use App\Services\Messages\Error\UserMessageError;
@@ -37,10 +37,10 @@ class EntityController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\EntityRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EntityRequest $request)
     {
         try {
             $data = new EntityCrud($this->entity);
@@ -77,11 +77,11 @@ class EntityController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\EntityRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EntityRequest $request, $id)
     {
         try {
             $data = new EntityCrud($this->entity);
