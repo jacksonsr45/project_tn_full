@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Entity;
-Use App\Services\ApiErrMessages;
-Use App\Services\ApiSuccessMessages;
 Use App\Services\Crud\EntityCrud;
+use App\Services\Messages\Error\UserMessageError;
+use App\Services\Messages\Success\EntityMessageSuccess;
 
 class EntityController extends Controller
 {
@@ -28,7 +28,7 @@ class EntityController extends Controller
     public function index()
     {
         $data = new EntityCrud($this->entity);
-        $message = new ApiSuccessMessages('index',
+        $message = new EntityMessageSuccess('index',
                                 $data->read());
         return response()->json($message
                         ->getMessage(), 200);
@@ -44,12 +44,12 @@ class EntityController extends Controller
     {
         try {
             $data = new EntityCrud($this->entity);
-            $message = new ApiSuccessMessages('store',
+            $message = new EntityMessageSuccess('store',
                                 $data->create($request));
             return response()->json($message
                             ->getMessage(), 200);
         } catch (\Exception $e) {
-            $message = new ApiErrMessages($e->getMessage());
+            $message = new UserMessageError($e->getMessage());
             return response()->json($message->getMessage(), 401);
         }
     }
@@ -64,12 +64,12 @@ class EntityController extends Controller
     {
         try {
             $data = new EntityCrud($this->entity);
-            $message = new ApiSuccessMessages('show',
+            $message = new EntityMessageSuccess('show',
                                     $data->show($id));
             return response()->json($message
                                 ->getMessage(), 200);
         } catch (\Exception $e) {
-            $message = new ApiErrMessages($e->getMessage());
+            $message = new UserMessageError($e->getMessage());
             return response()->json($message->getMessage(), 401);
         }
     }
@@ -85,12 +85,12 @@ class EntityController extends Controller
     {
         try {
             $data = new EntityCrud($this->entity);
-            $message = new ApiSuccessMessages('update',
+            $message = new EntityMessageSuccess('update',
                                     $data->update($request, $id));
             return response()->json($message
                             ->getMessage(), 200);
         } catch (\Exception $e) {
-            $message = new ApiErrMessages($e->getMessage());
+            $message = new UserMessageError($e->getMessage());
             return response()->json($message->getMessage(), 401);
         }
     }
@@ -105,12 +105,12 @@ class EntityController extends Controller
     {
         try {
             $data = new EntityCrud($this->entity);
-            $message = new ApiSuccessMessages('destroy',
+            $message = new EntityMessageSuccess('destroy',
                                     $data->delete($id));
             return response()->json($message
                             ->getMessage(), 200);
         } catch (\Exception $e) {
-            $message = new ApiErrMessages($e->getMessage());
+            $message = new UserMessageError($e->getMessage());
             return response()->json($message->getMessage(), 401);
         }
     }

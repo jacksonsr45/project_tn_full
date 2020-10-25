@@ -1,8 +1,7 @@
 <?php
+namespace App\Services\Messages\Success;
 
-namespace App\Services;
-
-class ApiSuccessMessages
+class AbstractSuccessMessage
 {
     /**
      * @var message

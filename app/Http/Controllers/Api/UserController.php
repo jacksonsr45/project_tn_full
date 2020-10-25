@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-Use App\Services\ApiErrMessages;
-Use App\Services\ApiSuccessMessages;
 Use App\Services\Crud\UserCrud;
+use App\Services\Messages\Error\UserMessageError;
+use App\Services\Messages\Success\UserMessageSuccess;
 
 class UserController extends Controller
 {
@@ -28,7 +28,7 @@ class UserController extends Controller
     public function index()
     {
         $data = new UserCrud($this->user);
-        $message = new ApiSuccessMessages('index',
+        $message = new UserMessageSuccess('index',
                                     $data->read());
         return response()->json($message
                         ->getMessage(), 200);
@@ -44,12 +44,12 @@ class UserController extends Controller
     {
         try {
             $data = new UserCrud($this->user);
-            $message = new ApiSuccessMessages('store',
+            $message = new UserMessageSuccess('store',
                                     $data->create($request));
             return response()->json($message
                         ->getMessage(), 200);
         } catch (\Exception $e) {
-            $message = new ApiErrMessages($e->getMessage());
+            $message = new UserMessageError($e->getMessage(), []);
             return response()->json($message->getMessage(), 401);
         }
 
@@ -65,12 +65,12 @@ class UserController extends Controller
     {
         try {
             $data = new UserCrud($this->user);
-            $message = new ApiSuccessMessages('show',
+            $message = new UserMessageSuccess('show',
                                         $data->show($id));
             return response()->json($message
                         ->getMessage(), 200);
         } catch (\Exception $e) {
-            $message = new ApiErrMessages($e->getMessage());
+            $message = new UserMessageError($e->getMessage());
             return response()->json($message->getMessage(), 401);
         }
 
@@ -87,12 +87,12 @@ class UserController extends Controller
     {
         try {
             $data = new UserCrud($this->user);
-            $message = new ApiSuccessMessages('update',
+            $message = new UserMessageSuccess('update',
                                     $data->update($request, $id));
             return response()->json($message
                         ->getMessage(), 200);
         } catch (\Exception $e) {
-            $message = new ApiErrMessages($e->getMessage());
+            $message = new UserMessageError($e->getMessage());
             return response()->json($message->getMessage(), 401);
         }
     }
@@ -107,12 +107,12 @@ class UserController extends Controller
     {
         try {
             $data = new UserCrud($this->user);
-            $message = new ApiSuccessMessages('destroy',
+            $message = new UserMessageSuccess('destroy',
                                     $data->delete($id));
             return response()->json($message
                         ->getMessage(), 200);
         } catch (\Exception $e) {
-            $message = new ApiErrMessages($e->getMessage());
+            $message = new UserMessageError($e->getMessage());
             return response()->json($message->getMessage(), 401);
         }
     }

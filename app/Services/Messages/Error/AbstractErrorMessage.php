@@ -1,13 +1,12 @@
 <?php
+namespace App\Services\Messages\Error;
 
-namespace App\Services;
-
-class ApiErrMessages
+class AbstractErrorMessage
 {
     /**
      * @var message
     */
-    private $message = [];
+    protected $message = [];
 
     public function __construct($message, array $data = [])
     {
