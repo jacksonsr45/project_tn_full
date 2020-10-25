@@ -25,4 +25,9 @@ class Entity extends Model
     {
         return $this->hasOne(Thumbnail::class);
     }
+
+    public function address()
+    {
+        return $this->belongsTo(Address::class);
+    }
 }

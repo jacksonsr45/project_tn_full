@@ -24,9 +24,21 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'max:255', 'unique:users'],
-            'password' => ['string', 'min:8'],
+            'name'              => ['required', 'string', 'max:255'],
+            'email'             => ['required', 'string', 'max:255', 'unique:users'],
+            'password'          => ['string', 'min:8'],
+            'phone'             => ['required', 'string', 'max:15'],
+            'mobile_phone'      => ['required', 'string', 'max:15'],
+            'description'       => ['required', 'string', 'max:255'],
+            'function'          => ['required', 'string', 'max:255'],
+            'state_id'          => ['required'],
+            'city_id'           => ['required'],
+            'country_id'        => ['required'],
+            'address'           => ['required'],
+            'number'            => ['required'],
+            'neighborhood'      => ['required', 'string', 'max:255'],
+            'complement'        => ['required', 'string', 'max:255'],
+            'zip_code'          => ['required']
         ];
     }
 }

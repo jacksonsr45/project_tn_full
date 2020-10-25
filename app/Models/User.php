@@ -50,9 +50,14 @@ class User extends Authenticatable
     {
         return $this->hasOne(Role::class);
     }
-    
+
     public function entity()
     {
         return $this->belongsTo(Entity::class);
+    }
+
+    public function address()
+    {
+        return $this->belongsTo(Address::class);
     }
 }
