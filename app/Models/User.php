@@ -11,6 +11,8 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    protected $appends = ['_links'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,6 +23,16 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+
+    public function getLinksAttribute()
+    {
+        return [
+            'Message' => 'Entidade relacionada a usuário',
+            'Entity'  => route('entities.entities.show', [
+                                'entity' => $this->profile->entity_id
+                            ]),
+        ];
+    }
 
     /**
      * The attributes that should be hidden for arrays.
@@ -53,16 +65,11 @@ class User extends Authenticatable
 
     public function entity()
     {
-        return $this->belongsTo(Entity::class);
+        return $this->hasOne(Entity::class);
     }
 
     public function user_address()
     {
         return $this->hasMany(UserAddress::class);
-    }
-
-    public function entity_address()
-    {
-        return $this->hasMany(EntityAddress::class);
     }
 }

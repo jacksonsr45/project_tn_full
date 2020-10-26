@@ -20,13 +20,13 @@ class Entity extends Model
         return $this->hasMany(User::class);
     }
 
-    public function entity()
+    public function thumb()
     {
         return $this->hasOne(Thumbnail::class);
     }
 
     public function entity_address()
     {
-        return $this->belongsTo(EntityAddress::class);
+        return $this->hasMany(EntityAddress::class);
     }
 }

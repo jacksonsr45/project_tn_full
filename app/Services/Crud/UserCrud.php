@@ -7,7 +7,6 @@ class UserCrud extends AbstractCrud
     {
         return $this->model->with('profile')
                            ->with('user_address')
-                           ->with('entity')
                            ->paginate(10);
     }
 
@@ -50,13 +49,20 @@ class UserCrud extends AbstractCrud
 
         return $this->model->with('profile')
                             ->with('user_address')
-                            ->with('entity')
                             ->findOrFail($address['user_id']);
+    }
+
+    public function show($id)
+    {
+        return $this->model->with('profile')
+                            ->with('user_address')
+                            ->findOrFail($id);
     }
 
     public function update($request, $id)
     {
         $data = $request->all();
+        $data['entity_id'] = $request->entity_id;
         if($request->has('password') && $request->get('password'))
         {
             $data['password'] = bcrypt($data['password']);
@@ -72,6 +78,7 @@ class UserCrud extends AbstractCrud
             */
             [
                 'user_id'           => $this->model->id,
+                'entity_id'         => $data['entity_id'],
                 'phone'             => $data['phone'],
                 'mobile_phone'      => $data['mobile_phone'],
                 'description'       => $data['description'],
@@ -97,7 +104,6 @@ class UserCrud extends AbstractCrud
 
         return $this->model->with('profile')
                            ->with('user_address')
-                           ->with('entity')
                            ->findOrFail($id);
     }
 }
