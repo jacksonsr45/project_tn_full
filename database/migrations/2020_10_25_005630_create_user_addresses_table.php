@@ -27,8 +27,12 @@ class CreateUserAddressesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')
                                                         ->onDelete('cascade')
                                                         ->onUpdate('cascade');
-            $table->foreign('state_id')->references('id')->on('states');
-            $table->foreign('city_id')->references('id')->on('cities');
+            $table->foreign('state_id')->references('id')->on('states')
+                                                    ->onDelete('cascade')
+                                                    ->onUpdate('cascade');
+            $table->foreign('city_id')->references('id')->on('cities')
+                                                    ->onDelete('cascade')
+                                                    ->onUpdate('cascade');
         });
     }
 

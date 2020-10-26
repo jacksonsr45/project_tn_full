@@ -14,6 +14,7 @@ class UserCrud extends AbstractCrud
     {
         $data = $request->all();
         $data['user_id'] = $request->user_id;
+        $data['entity_id'] = $request->entity_id;
         $data['password'] = bcrypt($data['password']);
         $user = $this->model->create($data);
 
@@ -62,6 +63,7 @@ class UserCrud extends AbstractCrud
     public function update($request, $id)
     {
         $data = $request->all();
+        $data['entity_id'] = $request->entity_id;
         $data['entity_id'] = $request->entity_id;
         if($request->has('password') && $request->get('password'))
         {

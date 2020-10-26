@@ -6,7 +6,8 @@ class EntityCrud extends AbstractCrud
     public function read()
     {
         return $this->model->with('entity_address')
-                                    ->paginate(10);
+                            ->with('user')
+                            ->paginate(10);
     }
 
     public function create($request)

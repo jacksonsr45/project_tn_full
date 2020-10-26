@@ -19,6 +19,11 @@ class Profile extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasOne(User::class);
+    }
+
+    public function entity()
+    {
+        return $this->hasOne(Entity::class);
     }
 }

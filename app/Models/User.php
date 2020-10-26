@@ -19,6 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
+        'entity_id',
         'name',
         'email',
         'password',
@@ -29,8 +30,8 @@ class User extends Authenticatable
         return [
             'Message' => 'Entidade relacionada a usuário',
             'Entity'  => route('entities.entities.show', [
-                                'entity' => $this->profile->entity_id
-                            ]),
+                'entity' => $this->profile->entity_id
+            ]),
         ];
     }
 
@@ -53,6 +54,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function entity()
+    {
+        return $this->hasOne(Entity::class);
+    }
+
     public function profile()
     {
         return $this->hasOne(Profile::class);
@@ -61,11 +67,6 @@ class User extends Authenticatable
     public function roles()
     {
         return $this->hasOne(Role::class);
-    }
-
-    public function entity()
-    {
-        return $this->hasOne(Entity::class);
     }
 
     public function user_address()
