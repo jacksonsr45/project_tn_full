@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Profile extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'user_id',
+        'phone',
+        'mobile_phone',
+        'description',
+        'function'
+    ];
 
     public function user()
     {

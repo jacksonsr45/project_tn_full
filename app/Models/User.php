@@ -56,8 +56,13 @@ class User extends Authenticatable
         return $this->belongsTo(Entity::class);
     }
 
-    public function address()
+    public function user_address()
     {
-        return $this->belongsTo(Address::class);
+        return $this->hasMany(UserAddress::class);
+    }
+
+    public function entity_address()
+    {
+        return $this->hasMany(EntityAddress::class);
     }
 }

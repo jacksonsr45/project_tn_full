@@ -33,7 +33,6 @@ class UserRequest extends FormRequest
             'function'          => ['required', 'string', 'max:255'],
             'state_id'          => ['required'],
             'city_id'           => ['required'],
-            'country_id'        => ['required'],
             'address'           => ['required'],
             'number'            => ['required'],
             'neighborhood'      => ['required', 'string', 'max:255'],

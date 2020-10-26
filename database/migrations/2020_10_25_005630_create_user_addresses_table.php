@@ -16,7 +16,6 @@ class CreateUserAddressesTable extends Migration
         Schema::create('user_addresses', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('country_id');
             $table->unsignedBigInteger('state_id');
             $table->unsignedBigInteger('city_id');
             $table->string('address');
@@ -28,15 +27,8 @@ class CreateUserAddressesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')
                                                         ->onDelete('cascade')
                                                         ->onUpdate('cascade');
-            $table->foreign('country_id')->references('id')->on('countries')
-                                                        ->onDelete('cascade')
-                                                        ->onUpdate('cascade');
-            $table->foreign('state_id')->references('id')->on('states')
-                                                        ->onDelete('cascade')
-                                                        ->onUpdate('cascade');
-            $table->foreign('city_id')->references('id')->on('cities')
-                                                        ->onDelete('cascade')
-                                                        ->onUpdate('cascade');
+            $table->foreign('state_id')->references('id')->on('states');
+            $table->foreign('city_id')->references('id')->on('cities');
         });
     }
 

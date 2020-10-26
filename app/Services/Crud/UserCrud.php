@@ -1,6 +1,5 @@
 <?php
 namespace App\Services\Crud;
-use Illuminate\Support\Facades\Validator;
 
 class UserCrud extends AbstractCrud
 {
@@ -15,7 +14,7 @@ class UserCrud extends AbstractCrud
         $data['user_id'] = $request->user_id;
         $user = $this->model->create($data);
 
-        $user->profile()->create(
+        $profile = $user->profile()->create(
             /**
              * Gerando os dados para user em profile!
             */
@@ -28,15 +27,14 @@ class UserCrud extends AbstractCrud
             ]
         );
 
-        $user->address()->create(
+        $user->user_address()->create(
             /**
              * Gerando os dados para user em address!
             */
             [
-                'user_id'           => $data['user_id'],
+                'user_id'           => $profile['user_id'],
                 'state_id'          => $data['state_id'],
                 'city_id'           => $data['city_id'],
-                'country_id'        => $data['country_id'],
                 'address'           => $data['address'],
                 'number'            => $data['number'],
                 'neighborhood'      => $data['neighborhood'],
@@ -45,13 +43,13 @@ class UserCrud extends AbstractCrud
             ]
         );
 
-        return $this->model->with('profile')->with('address');
+
+        return $this->model->all();
     }
 
     public function update($request, $id)
     {
         $data = $request->all();
-        $data['user_id'] = $request->user_id;
         $this->model = $this->model->findOrFail($id);
         $this->model->update($data);
 
@@ -60,7 +58,7 @@ class UserCrud extends AbstractCrud
              * Gerando update de dados para user em profile!
             */
             [
-                'user_id'           => $data['user_id'],
+                'user_id'           => $this->model->id,
                 'phone'             => $data['phone'],
                 'mobile_phone'      => $data['mobile_phone'],
                 'description'       => $data['description'],
@@ -68,15 +66,14 @@ class UserCrud extends AbstractCrud
             ]
         );
 
-        $this->model->address()->update(
+        $this->model->user_address()->update(
             /**
              * Gerando update de dados para user em address!
             */
             [
-                'user_id'           => $data['user_id'],
+                'user_id'           => $this->model->id,
                 'state_id'          => $data['state_id'],
                 'city_id'           => $data['city_id'],
-                'country_id'        => $data['country_id'],
                 'address'           => $data['address'],
                 'number'            => $data['number'],
                 'neighborhood'      => $data['neighborhood'],
@@ -84,6 +81,6 @@ class UserCrud extends AbstractCrud
                 'zip_code'          => $data['zip_code']
             ]
         );
-        return $this->model->with('profile')->with('address');
+        return $this->model->findOrFail($id);
     }
 }

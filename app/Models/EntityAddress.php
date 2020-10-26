@@ -5,9 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Address extends Model
+class EntityAddress extends Model
 {
     use HasFactory;
+
+    protected $table = 'entity_addresses';
+
+    protected $fillable = [
+        'entity_id',
+        'state_id',
+        'city_id',
+        'address',
+        'number',
+        'neighborhood',
+        'complement',
+        'zip_code'
+    ];
 
     public function state()
     {

@@ -14,8 +14,13 @@ class City extends Model
         return $this->belongsTo(State::class);
     }
 
-    public function addresses()
+    public function user_address()
     {
-        return $this->hasMany(Address::class);
+        return $this->hasMany(UserAddress::class);
+    }
+
+    public function entity_address()
+    {
+        return $this->hasMany(EntityAddress::class);
     }
 }
