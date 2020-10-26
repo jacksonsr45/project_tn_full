@@ -5,7 +5,10 @@ class UserCrud extends AbstractCrud
 {
     public function read()
     {
-        return $this->model->all();
+        return $this->model->with('profile')
+                           ->with('user_address')
+                           ->with('entity')
+                           ->paginate(10);
     }
 
     public function create($request)
@@ -81,6 +84,10 @@ class UserCrud extends AbstractCrud
                 'zip_code'          => $data['zip_code']
             ]
         );
-        return $this->model->findOrFail($id);
+
+        return $this->model->with('profile')
+                           ->with('user_address')
+                           ->with('entity')
+                           ->findOrFail($id);
     }
 }
