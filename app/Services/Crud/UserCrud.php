@@ -15,6 +15,7 @@ class UserCrud extends AbstractCrud
     {
         $data = $request->all();
         $data['user_id'] = $request->user_id;
+        $data['password'] = bcrypt($data['password']);
         $user = $this->model->create($data);
 
         $profile = $user->profile()->create(
@@ -30,7 +31,7 @@ class UserCrud extends AbstractCrud
             ]
         );
 
-        $user->user_address()->create(
+        $address = $user->user_address()->create(
             /**
              * Gerando os dados para user em address!
             */
@@ -47,12 +48,21 @@ class UserCrud extends AbstractCrud
         );
 
 
-        return $this->model->all();
+        return $this->model->with('profile')
+                            ->with('user_address')
+                            ->with('entity')
+                            ->findOrFail($address['user_id']);
     }
 
     public function update($request, $id)
     {
         $data = $request->all();
+        if($request->has('password') && $request->get('password'))
+        {
+            $data['password'] = bcrypt($data['password']);
+        } else {
+            unset($data['password']);
+        }
         $this->model = $this->model->findOrFail($id);
         $this->model->update($data);
 
