@@ -5,6 +5,9 @@ class UserCrud extends AbstractCrud
 {
     public function read()
     {
+        /**
+         * Retorna usuário com Profile e Address
+        */
         return $this->model->with('profile')
                            ->with('user_address')
                            ->paginate(10);
@@ -17,7 +20,6 @@ class UserCrud extends AbstractCrud
         $data['entity_id'] = $request->entity_id;
         $data['password'] = bcrypt($data['password']);
         $user = $this->model->create($data);
-
         $profile = $user->profile()->create(
             /**
              * Gerando os dados para user em profile!
@@ -30,7 +32,6 @@ class UserCrud extends AbstractCrud
                 'function'          => $data['function']
             ]
         );
-
         $address = $user->user_address()->create(
             /**
              * Gerando os dados para user em address!
@@ -46,8 +47,6 @@ class UserCrud extends AbstractCrud
                 'zip_code'          => $data['zip_code']
             ]
         );
-
-
         return $this->model->with('profile')
                             ->with('user_address')
                             ->findOrFail($address['user_id']);
@@ -55,6 +54,9 @@ class UserCrud extends AbstractCrud
 
     public function show($id)
     {
+        /**
+         * Retorna usuário filtrado pelo ID com Profile e Address
+        */
         return $this->model->with('profile')
                             ->with('user_address')
                             ->findOrFail($id);
@@ -65,6 +67,9 @@ class UserCrud extends AbstractCrud
         $data = $request->all();
         $data['entity_id'] = $request->entity_id;
         $data['entity_id'] = $request->entity_id;
+        /**
+         * Pequena validação se a um password ou se foi fornecido algum!
+        */
         if($request->has('password') && $request->get('password'))
         {
             $data['password'] = bcrypt($data['password']);
@@ -73,7 +78,6 @@ class UserCrud extends AbstractCrud
         }
         $this->model = $this->model->findOrFail($id);
         $this->model->update($data);
-
         $this->model->profile()->update(
             /**
              * Gerando update de dados para user em profile!
@@ -87,7 +91,6 @@ class UserCrud extends AbstractCrud
                 'function'          => $data['function']
             ]
         );
-
         $this->model->user_address()->update(
             /**
              * Gerando update de dados para user em address!
@@ -103,7 +106,6 @@ class UserCrud extends AbstractCrud
                 'zip_code'          => $data['zip_code']
             ]
         );
-
         return $this->model->with('profile')
                            ->with('user_address')
                            ->findOrFail($id);

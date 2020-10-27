@@ -5,8 +5,11 @@ class EntityCrud extends AbstractCrud
 {
     public function read()
     {
+        /**
+         * Retornando Entidade com usuários pertencentes
+        */
         return $this->model->with('entity_address')
-                            ->with('user')
+                            ->with('users')
                             ->paginate(10);
     }
 
@@ -15,7 +18,6 @@ class EntityCrud extends AbstractCrud
         $data = $request->all();
         $data['entity_id'] = $request->entity_id;
         $entity = $this->model->create($data);
-
         $address = $entity->entity_address()->create(
             /**
              * Gerando os dados para entity em address!
@@ -31,25 +33,25 @@ class EntityCrud extends AbstractCrud
                 'zip_code'          => $data['zip_code']
             ]
         );
-
-
         return $this->model->with('entity_address')
                             ->findOrFail($address['entity_id']);
     }
 
     public function show($id)
     {
+        /**
+         * Retornando Entidade filtrada pelo ID com usuários pertencentes!
+        */
         return $this->model->with('entity_address')
-                                ->findOrFail($id);
+                            ->with('users')
+                            ->paginate(10);
     }
 
     public function update($request, $id)
     {
         $data = $request->all();
-
         $this->model = $this->model->findOrFail($id);
         $this->model->update($data);
-
         $this->model->entity_address()->update(
             /**
              * Gerando update de dados para user em address!
@@ -65,7 +67,6 @@ class EntityCrud extends AbstractCrud
                 'zip_code'          => $data['zip_code']
             ]
         );
-
         return $this->model->with('entity_address')
                                 ->findOrFail($this->model->id);
     }

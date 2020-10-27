@@ -27,10 +27,12 @@ class User extends Authenticatable
 
     public function getLinksAttribute()
     {
+        $entity = $this->entity_id;
+        if(!$entity) return null;
         return [
             'Message' => 'Entidade relacionada a usuário',
             'Entity'  => route('entities.entities.show', [
-                'entity' => $this->profile->entity_id
+                'entity' => $this->entity_id
             ]),
         ];
     }

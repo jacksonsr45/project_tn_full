@@ -15,7 +15,7 @@ class Entity extends Model
         'description'
     ];
 
-    public function user()
+    public function users()
     {
         return $this->hasMany(User::class);
     }
