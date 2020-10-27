@@ -27,6 +27,10 @@ class User extends Authenticatable
 
     public function getLinksAttribute()
     {
+        /**
+         * Recebendo valor de user->entity_id
+         * Validando caso de nulo retornando nulo
+        */
         $entity = $this->entity_id;
         if(!$entity) return null;
         return [

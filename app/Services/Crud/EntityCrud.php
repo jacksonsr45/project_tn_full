@@ -3,7 +3,7 @@ namespace App\Services\Crud;
 
 class EntityCrud extends AbstractCrud
 {
-    public function read()
+    public function read($request)
     {
         /**
          * Retornando Entidade

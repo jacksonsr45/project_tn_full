@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
+use Illuminate\Http\Request;
 use App\Models\User;
 Use App\Services\Crud\UserCrud;
 use App\Services\Messages\Error\UserMessageError;
@@ -22,14 +23,14 @@ class UserController extends Controller
     }
     /**
      * Display a listing of the resource.
-     *
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $data = new UserCrud($this->user);
         $message = new UserMessageSuccess('index',
-                                    $data->read());
+                                    $data->read($request));
         return response()->json($message
                         ->getMessage(), 200);
     }

@@ -25,6 +25,10 @@ class Entity extends Model
 
     public function getLinksAttribute()
     {
+        /**
+         * Recebendo valor de entity->id
+         * Validando caso de nulo retornando nulo
+        */
         $entity = $this->id;
         if(!$entity) return null;
         return [

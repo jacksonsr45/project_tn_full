@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EntityRequest;
+use Illuminate\Http\Request;
 use App\Models\Entity;
 Use App\Services\Crud\EntityCrud;
 use App\Services\Messages\Error\UserMessageError;
@@ -22,14 +23,15 @@ class EntityController extends Controller
     }
     /**
      * Display a listing of the resource.
+     * @param  \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $data = new EntityCrud($this->entity);
         $message = new EntityMessageSuccess('index',
-                                $data->read());
+                                $data->read($request));
         return response()->json($message
                         ->getMessage(), 200);
     }

@@ -18,7 +18,7 @@ abstract class AbstractCrud
 		$this->model = $model;
     }
 
-    public function read()
+    public function read($request)
     {
         return $this->model->all();
     }

@@ -1,10 +1,30 @@
 <?php
 namespace App\Services\Crud;
 
+use App\Services\Filters\UsersFilters;
+
 class UserCrud extends AbstractCrud
 {
-    public function read()
+    public function read($request)
     {
+        /**
+         * Deixando por enquanto sem funcionamento e aqui
+         * porem levar para outro field e remover o request deste index
+        */
+        $filter = new UsersFilters($this->model);
+        if($request)
+        {
+            if($request->has('conditions'))
+            {
+                $filter->selectConditions($request->get('conditions'));
+            }
+            if($request->has('fields'))
+            {
+                $filter->selectFilter($request->get('fields'));
+            }
+
+            return $filter->getResult()->paginate(10);
+        }
         /**
          * Retorna usuário com Profile e Address
         */
