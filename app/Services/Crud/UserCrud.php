@@ -7,22 +7,10 @@ class UserCrud extends AbstractCrud
 {
     public function read($request)
     {
-        /**
-         * Deixando por enquanto sem funcionamento e aqui
-         * porem levar para outro field e remover o request deste index
-        */
-        $filter = new UsersFilters($this->model);
-        if($request)
+        if($request->has('entity_id'))
         {
-            if($request->has('conditions'))
-            {
-                $filter->selectConditions($request->get('conditions'));
-            }
-            if($request->has('fields'))
-            {
-                $filter->selectFilter($request->get('fields'));
-            }
-
+            $filter = new UsersFilters($this->model);
+            $filter->getResultIndexUsers($request);
             return $filter->getResult()->paginate(10);
         }
         /**

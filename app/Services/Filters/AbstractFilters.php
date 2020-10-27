@@ -16,20 +16,11 @@ abstract class AbstractFilters
 		$this->model = $model;
 	}
 
-	public function selectConditions($condition)
-	{
-		$expressions = explode(';', $condition);
-		foreach($expressions as $e) {
-			$exp = explode('', $e);
-
-			$this->model = $this->model->where($exp[0], $exp[1], $exp[2]);
-		}
-	}
-
-	public function selectFilter($filters)
-	{
-		$this->model = $this->model->selectRaw($filters);
-	}
+    public function getResultIndexUsers($request)
+    {
+        $this->model = $this->model->where('entity_id', 'LIKE',
+                                    $request->entity_id );
+    }
 
 	public function getResult()
 	{
