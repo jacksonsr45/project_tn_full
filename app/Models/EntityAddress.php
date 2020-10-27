@@ -22,6 +22,14 @@ class EntityAddress extends Model
         'zip_code'
     ];
 
+
+    protected $hidden = [
+        'id',
+        'entity_id',
+        'created_at',
+        'updated_at',
+    ];
+
     public function state()
     {
         return $this->belongsTo(State::class);

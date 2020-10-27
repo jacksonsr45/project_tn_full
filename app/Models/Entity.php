@@ -9,11 +9,31 @@ class Entity extends Model
 {
     use HasFactory;
 
+    protected $appends = ['_links'];
+
     protected $fillable = [
         'name',
         'type',
         'description'
     ];
+
+    protected $hidden = [
+        'is_active',
+        'created_at',
+        'updated_at',
+    ];
+
+    public function getLinksAttribute()
+    {
+        $entity = $this->id;
+        if(!$entity) return null;
+        return [
+            'Message' => 'Usuários relacionada a Entidade!',
+            'Entity'  => route('users.users.index', [
+                'entity_id' => $this->id
+            ]),
+        ];
+    }
 
     public function users()
     {

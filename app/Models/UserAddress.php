@@ -22,6 +22,19 @@ class UserAddress extends Model
         'zip_code'
     ];
 
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'id',
+        'user_id',
+        'created_at',
+        'updated_at',
+    ];
+
+
     public function state()
     {
         return $this->belongsTo(State::class);

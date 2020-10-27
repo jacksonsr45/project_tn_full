@@ -6,10 +6,9 @@ class EntityCrud extends AbstractCrud
     public function read()
     {
         /**
-         * Retornando Entidade com usuários pertencentes
+         * Retornando Entidade
         */
         return $this->model->with('entity_address')
-                            ->with('users')
                             ->paginate(10);
     }
 
@@ -40,10 +39,9 @@ class EntityCrud extends AbstractCrud
     public function show($id)
     {
         /**
-         * Retornando Entidade filtrada pelo ID com usuários pertencentes!
+         * Retornando Entidade filtrada pelo ID!
         */
         return $this->model->with('entity_address')
-                            ->with('users')
                             ->paginate(10);
     }
 
@@ -54,7 +52,7 @@ class EntityCrud extends AbstractCrud
         $this->model->update($data);
         $this->model->entity_address()->update(
             /**
-             * Gerando update de dados para user em address!
+             * Gerando update de dados para entity em address!
             */
             [
                 'entity_id'         => $this->model->id,
