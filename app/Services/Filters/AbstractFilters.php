@@ -16,12 +16,6 @@ abstract class AbstractFilters
 		$this->model = $model;
 	}
 
-    public function getResultIndexUsers($request)
-    {
-        $this->model = $this->model->where('entity_id', 'LIKE',
-                                    $request->entity_id );
-    }
-
 	public function getResult()
 	{
 		return $this->model;

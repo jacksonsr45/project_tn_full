@@ -9,6 +9,11 @@ class UserCrud extends AbstractCrud
     {
         if($request->has('entity_id'))
         {
+            /**
+             * Instanciando UsersFilter no $filter
+             * passando $request
+             * Pegando resultado para todos $this->entity_id neste model
+            */
             $filter = new UsersFilters($this->model);
             $filter->getResultIndexUsers($request);
             return $filter->getResult()->paginate(10);
@@ -24,6 +29,12 @@ class UserCrud extends AbstractCrud
     public function create($request)
     {
         $data = $request->all();
+        /**
+         * Recebendo tudo de $request em $data
+         * Atribuindo direto de $request->user_id para $data['user_id']
+         * Atribuindo direto de $request->entity_id para $data['entity_id']
+         * e já passando o valor de senha com bcrypt($data['password'])
+        */
         $data['user_id'] = $request->user_id;
         $data['entity_id'] = $request->entity_id;
         $data['password'] = bcrypt($data['password']);
@@ -73,6 +84,11 @@ class UserCrud extends AbstractCrud
     public function update($request, $id)
     {
         $data = $request->all();
+        /**
+         * Recebendo tudo de $request em $data
+         * Atribuindo direto de $request->user_id para $data['user_id']
+         * Atribuindo direto de $request->entity_id para $data['entity_id']
+        */
         $data['entity_id'] = $request->entity_id;
         $data['entity_id'] = $request->entity_id;
         /**
