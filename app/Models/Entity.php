@@ -58,4 +58,9 @@ class Entity extends Model
     {
         return $this->hasMany(EntityAddress::class);
     }
+
+    public function bank_account()
+    {
+        return $this->hasOne(BankAccount::class);
+    }
 }

@@ -82,4 +82,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserAddress::class);
     }
+
+    public function bank_account()
+    {
+        return $this->hasOne(BankAccount::class);
+    }
 }
