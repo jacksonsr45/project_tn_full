@@ -51,7 +51,7 @@ Route::prefix('v1')->namespace('App\Http\Controllers\Api')->group(function(){
      * This Route from applications in accounts referencies by this account
     */
     Route::name('account-application.')->group(function() {
-        Route::resource('account-application', 'AccountApplicationController');
+        Route::resource('account-application', 'MercyAccountApplicationController');
     });
     /**
      * Route from account-movements

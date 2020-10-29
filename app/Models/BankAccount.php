@@ -38,4 +38,9 @@ class BankAccount extends Model
     {
         return $this->hasMany(PietyWork::class);
     }
+
+    public function mercy_account_application()
+    {
+        return $this->hasMany(MercyAccountApplication::class);
+    }
 }

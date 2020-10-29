@@ -92,4 +92,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(PietyWork::class);
     }
+
+    public function mercy_account_application()
+    {
+        return $this->hasOne(MercyAccountApplication::class);
+    }
 }

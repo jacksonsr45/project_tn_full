@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PietyWork extends Model
+class MercyAccountApplication extends Model
 {
     use HasFactory;
-    protected $table = "piety_works";
+    protected $table = "mercy_account_applications";
 
     protected $hidden = [
         'created_at',
