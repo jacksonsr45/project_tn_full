@@ -7,5 +7,6 @@ class EntitiesFilters extends AbstractFilters
     {
         $this->model = $this->model->where('id', 'LIKE',
                                     $request->entity_id );
+
     }
 }
