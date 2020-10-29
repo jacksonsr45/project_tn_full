@@ -48,4 +48,9 @@ class BankAccount extends Model
     {
         return $this->hasMany(PietyAccountMovements::class);
     }
+
+    public function travel()
+    {
+        return $this->hasMany(Travel::class);
+    }
 }

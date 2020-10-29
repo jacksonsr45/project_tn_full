@@ -102,4 +102,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(PietyAccountMovements::class);
     }
+
+    public function travel()
+    {
+        return $this->hasOne(Travel::class);
+    }
 }

@@ -78,4 +78,9 @@ class Entity extends Model
     {
         return $this->hasOne(PietyAccountMovements::class);
     }
+
+    public function travel()
+    {
+        return $this->hasOne(Travel::class);
+    }
 }
