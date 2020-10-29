@@ -73,4 +73,9 @@ class Entity extends Model
     {
         return $this->hasOne(MercyAccountApplication::class);
     }
+
+    public function piety_account_movements()
+    {
+        return $this->hasOne(PietyAccountMovements::class);
+    }
 }

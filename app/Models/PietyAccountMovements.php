@@ -5,11 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class BankAccount extends Model
+class PietyAccountMovements extends Model
 {
     use HasFactory;
-
-    protected $table = "bank_accounts";
+    protected $table = "piety_account_movements";
 
     protected $hidden = [
         'created_at',
@@ -19,9 +18,11 @@ class BankAccount extends Model
     protected $fillable = [
         'entity_id',
         'user_id',
-        'title',
-        'account',
-        'description'
+        'account_id',
+        'historic',
+        'deb',
+        'cred',
+        'total'
     ];
 
     public function entity()
@@ -34,18 +35,8 @@ class BankAccount extends Model
         return $this->hasMany(User::class);
     }
 
-    public function piety_work()
+    public function account()
     {
-        return $this->hasMany(PietyWork::class);
-    }
-
-    public function mercy_account_application()
-    {
-        return $this->hasMany(MercyAccountApplication::class);
-    }
-
-    public function piety_account_movements()
-    {
-        return $this->hasMany(PietyAccountMovements::class);
+        return $this->hasOne(BankAccount::class);
     }
 }

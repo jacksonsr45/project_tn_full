@@ -58,7 +58,7 @@ Route::prefix('v1')->namespace('App\Http\Controllers\Api')->group(function(){
      * This Route from movements in accounts referencies by this account
     */
     Route::name('account-movements.')->group(function() {
-        Route::resource('account-movements', 'AccountMovementsController');
+        Route::resource('account-movements', 'PietyAccountMovementsController');
     });
     /**
      * Route from travel

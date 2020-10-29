@@ -97,4 +97,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(MercyAccountApplication::class);
     }
+
+    public function piety_account_movements()
+    {
+        return $this->hasOne(PietyAccountMovements::class);
+    }
 }
