@@ -32,8 +32,28 @@ class Entity extends Model
         $entity = $this->id;
         if(!$entity) return null;
         return [
-            'Message' => 'Usuários relacionada a Entidade!',
+            'Message' => 'Usuários e tabelas relacionados a Entidade pelo ID!',
             'Entity'  => route('users.users.index', [
+                'entity_id' => $this->id
+            ]),
+
+            'BankAccount'  => route('bank-accounts.bank-accounts.index', [
+                'entity_id' => $this->id
+            ]),
+
+            'PietyWorks'  => route('piety-works.piety-works.index', [
+                'entity_id' => $this->id
+            ]),
+
+            'MercyAccountApplication'  => route('account-application.account-application.index', [
+                'entity_id' => $this->id
+            ]),
+
+            'PietyAccountMovements'  => route('account-movements.account-movements.index', [
+                'entity_id' => $this->id
+            ]),
+
+            'Travel'  => route('travel.travel.index', [
                 'entity_id' => $this->id
             ]),
         ];

@@ -1,11 +1,20 @@
 <?php
 namespace App\Services\Crud;
 
+use App\Services\Filters\PietyAccountMovementsFilters;
+
 class PietyAccountMovementsCrud extends AbstractCrud
 {
     public function read($request)
     {
-        return $this->model->paginate(10);
+        /**
+        * Instanciando PietyAccountMovementsFilters no $filter
+        * passando $request
+        * Pegando resultado para todos $this->entity_id neste model
+        */
+        $filter = new PietyAccountMovementsFilters($this->model);
+        $filter->getResultIndexPietyAccountMovements($request);
+        return $filter->getResult()->paginate(10);
     }
 
     public function create($request)

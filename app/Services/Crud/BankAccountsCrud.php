@@ -1,11 +1,21 @@
 <?php
 namespace App\Services\Crud;
 
+use App\Services\Filters\BankAccountsFilters;
+
 class BankAccountsCrud extends AbstractCrud
 {
     public function read($request)
     {
-        return $this->model->paginate(10);
+        /**
+        * Instanciando EntitiesFilters no $filter
+        * passando $request
+        * Pegando resultado para todos $this->entity_id neste model
+        */
+        $filter = new BankAccountsFilters($this->model);
+        $filter->getResultIndexBankAccounts($request);
+        return $filter->getResult()
+                      ->paginate(10);
     }
 
     public function create($request)

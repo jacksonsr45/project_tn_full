@@ -34,9 +34,29 @@ class User extends Authenticatable
         $entity = $this->entity_id;
         if(!$entity) return null;
         return [
-            'Message' => 'Entidade relacionada a usuário',
+            'Message' => 'Entidade e tabelas relacionada a usuário por entity_id',
             'Entity'  => route('entities.entities.show', [
                 'entity' => $this->entity_id
+            ]),
+
+            'BankAccount'  => route('bank-accounts.bank-accounts.index', [
+                'entity_id' => $this->entity_id
+            ]),
+
+            'PietyWorks'  => route('piety-works.piety-works.index', [
+                'entity_id' => $this->entity_id
+            ]),
+
+            'MercyAccountApplication'  => route('account-application.account-application.index', [
+                'entity_id' => $this->entity_id
+            ]),
+
+            'PietyAccountMovements'  => route('account-movements.account-movements.index', [
+                'entity_id' => $this->entity_id
+            ]),
+
+            'Travel'  => route('travel.travel.index', [
+                'entity_id' => $this->entity_id
             ]),
         ];
     }

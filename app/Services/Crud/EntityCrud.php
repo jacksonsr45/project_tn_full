@@ -1,15 +1,21 @@
 <?php
 namespace App\Services\Crud;
 
+use App\Services\Filters\EntitiesFilters;
+
 class EntityCrud extends AbstractCrud
 {
     public function read($request)
     {
         /**
-         * Retornando Entidade
+        * Instanciando EntitiesFilters no $filter
+        * passando $request
+        * Pegando resultado para todos $this->entity_id neste model
         */
-        return $this->model->with('entity_address')
-                            ->paginate(10);
+        $filter = new EntitiesFilters($this->model);
+        $filter->getResultIndexEntities($request);
+        return $filter->getResult()->with('entity_address')
+                                    ->paginate(10);
     }
 
     public function create($request)

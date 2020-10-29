@@ -1,9 +1,9 @@
 <?php
 namespace App\Services\Filters;
 
-class TravelFilters extends AbstractFilters
+class PietyWorksFilters extends AbstractFilters
 {
-    public function getResultIndexTravel($request)
+    public function getResultIndexPietyWorks($request)
     {
         $this->model = $this->model->where('entity_id', 'LIKE',
                                     $request->entity_id );
