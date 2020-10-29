@@ -44,7 +44,7 @@ Route::prefix('v1')->namespace('App\Http\Controllers\Api')->group(function(){
      * movements in this account from piety-works
     */
     Route::name('piety-works.')->group(function() {
-        Route::resource('piety-works', 'PietWorksController');
+        Route::resource('piety-works', 'PietyWorksController');
     });
     /**
      * Route from account-application
